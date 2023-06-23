@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class DAO<T> {
     
     public static final String DRIVER = "org.sqlite.JDBC";
-    public static final String URL = "jdbc:sqlite:" + "";
+    public static final String URL = "jdbc:sqlite:" + "database/showtracker.db";
     public static final String USER = "postgres";
     public static final String PASSWORD = "ufc123";
     
