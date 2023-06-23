@@ -113,7 +113,26 @@ public class UserDAO extends DAO<User> {
 		} catch (Exception ex) {
 			System.out.println("Erro: " + ex.getMessage());
 		}
-		// TODO implement method
+		return result;
+	}
+	
+	public boolean deleteUser(String email) {
+		boolean result = false;
+		try {
+			Class.forName(DRIVER);
+			Connection c = DriverManager.getConnection(URL);
+			PreparedStatement stmt = c.prepareStatement("DELETE FROM user_movie WHERE email = ?");
+			stmt.setString(1, email);
+			result = (stmt.executeUpdate() == 1);
+
+			stmt.close();
+			c.close();
+
+		} catch (SQLException ex) {
+			System.out.println("Erro: " + ex.getMessage());
+		} catch (Exception ex) {
+			System.out.println("Erro: " + ex.getMessage());
+		}
 		return result;
 	}
 
