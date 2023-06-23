@@ -6,8 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import show.tracker.api.model.User;
 
+@Repository
 public class UserDAO extends DAO<User> {
 
 	@Override
