@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import show.tracker.api.model.User;
 import show.tracker.api.repository.UserDAO;
+import show.tracker.api.repository.WatchedListDAO;
 
 @RestController
 @RequestMapping("/users")
@@ -38,6 +39,8 @@ public class UserController {
 		boolean isSuccess = userDAO.insert(user);
 
 		if (isSuccess) {
+			WatchedListDAO wlDAO = new WatchedListDAO();
+			wlDAO.insert(user.getEmail());
 			User newUser = userDAO.getOne(user.getEmail(), user.getPassword());
 			return ResponseEntity.ok(newUser);
 		} else {
@@ -48,12 +51,24 @@ public class UserController {
 	@DeleteMapping("/deleteAccount")
 	public ResponseEntity<String> deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
 		String email = userDeleteRequest.getEmail();
-		boolean deleted = userDAO.deleteUser(email);
-		if (deleted) {
-			return new ResponseEntity<>("User deleted successfully.", HttpStatus.OK);
+		WatchedListDAO wlDAO = new WatchedListDAO();
+		// boolean deleteMedia = wlDAO.deleteAllUserMedia(email);
+		// if (deleteMedia) {
+		boolean deleteWL = wlDAO.delete(email);
+		if (deleteWL) {
+			boolean deletedUser = userDAO.deleteUser(email);
+			if (deletedUser) {
+				return new ResponseEntity<>("User deleted successfully.", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Failed to delete user.", HttpStatus.NOT_FOUND);
+			}
 		} else {
-			return new ResponseEntity<>("Failed to delete user.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Failed to delete user whatched list.", HttpStatus.NOT_FOUND);
 		}
+		// } else {
+		// return new ResponseEntity<>("Failed to delete user media.",
+		// HttpStatus.NOT_FOUND);
+		// }
 	}
 
 	public static class UserCredentials {
