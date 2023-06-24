@@ -60,7 +60,7 @@ public class GenreController {
 		if (updated) {
 			return new ResponseEntity<>("Genre updated successfully.", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Failed to update genre.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Failed to update genre.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

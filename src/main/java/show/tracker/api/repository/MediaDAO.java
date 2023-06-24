@@ -25,7 +25,7 @@ public class MediaDAO extends DAO<Media> {
         Media result = null;
         try {
             Class.forName(DRIVER);
-            Connection c = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection c = DriverManager.getConnection(URL);
             PreparedStatement stmt = c.prepareStatement("SELECT id, title_type, year, title, is_adult, duration, end_year FROM media WHERE id = ?");
             stmt.setInt(id, id);
             boolean found = false;
@@ -64,7 +64,7 @@ public class MediaDAO extends DAO<Media> {
         List<Media> result = new ArrayList<>();
         try {
             Class.forName(DRIVER);
-            Connection c = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection c = DriverManager.getConnection(URL);
             PreparedStatement stmt = c.prepareStatement("SELECT id, title_type, year, title, is_adult, duration, end_year FROM media");
             boolean found = false;
             ResultSet rs = stmt.executeQuery();
@@ -109,7 +109,7 @@ public class MediaDAO extends DAO<Media> {
         List<Media> result = new ArrayList<>();
         try {
             Class.forName(DRIVER);
-            Connection c = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection c = DriverManager.getConnection(URL);
             PreparedStatement stmt = c.prepareStatement("SELECT id, title_type, year, title, is_adult, duration, end_year FROM media WHERE title LIKE '%" + entry + "%'");
             // stmt.setString(1, entry);
             boolean found = false;
