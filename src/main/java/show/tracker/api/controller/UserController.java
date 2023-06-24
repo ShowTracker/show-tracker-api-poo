@@ -16,20 +16,11 @@ import show.tracker.api.repository.UserDAO;
 @RequestMapping("/users")
 public class UserController {
 
-	private UserDAO userDAO; // Instance of UserDAO
+	private UserDAO userDAO;
 
 	public UserController(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-
-	/*
-	 * @GetMapping public ResponseEntity<?> getUser(@RequestParam("email") String
-	 * email, @RequestParam("password") String password) { User user =
-	 * userDAO.getOne(email, password);
-	 * 
-	 * if (user != null) { return ResponseEntity.ok(user); } else { return
-	 * ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"); } }
-	 */
 
 	@GetMapping
 	public ResponseEntity<?> getUser(@RequestBody UserCredentials credentials) {
@@ -41,30 +32,29 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
 		}
 	}
-	
-	@PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user) {
-        boolean isSuccess = userDAO.insert(user);
 
-        if (isSuccess) {
-        	User newUser = userDAO.getOne(user.getEmail(), user.getPassword());
-            return ResponseEntity.ok(newUser);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to register user");
-        }
-    }
-	
+	@PostMapping("/register")
+	public ResponseEntity<?> registerUser(@RequestBody User user) {
+		boolean isSuccess = userDAO.insert(user);
+
+		if (isSuccess) {
+			User newUser = userDAO.getOne(user.getEmail(), user.getPassword());
+			return ResponseEntity.ok(newUser);
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to register user");
+		}
+	}
+
 	@DeleteMapping("/deleteAccount")
-    public ResponseEntity<String> deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
-        String email = userDeleteRequest.getEmail();
-        boolean deleted = userDAO.deleteUser(userDeleteRequest.getEmail());
-        if (deleted) {
-            return new ResponseEntity<>("Usuário excluído com sucesso.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Falha ao excluir o usuário.", HttpStatus.NOT_FOUND);
-        }
-    }
+	public ResponseEntity<String> deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
+		String email = userDeleteRequest.getEmail();
+		boolean deleted = userDAO.deleteUser(email);
+		if (deleted) {
+			return new ResponseEntity<>("User deleted successfully.", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Failed to delete user.", HttpStatus.NOT_FOUND);
+		}
+	}
 
 	public static class UserCredentials {
 		private String email;
@@ -89,16 +79,16 @@ public class UserController {
 			this.password = password;
 		}
 	}
-	
+
 	public static class UserDeleteRequest {
-        private String email;
+		private String email;
 
-        public String getEmail() {
-            return email;
-        }
+		public String getEmail() {
+			return email;
+		}
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
-    }
+		public void setEmail(String email) {
+			this.email = email;
+		}
+	}
 }

@@ -17,7 +17,7 @@ public abstract class DAO<T> {
     
     public abstract List<T> getAll();
     
-    public abstract void update(T obj);
+    public abstract boolean update(T obj);
     
     public abstract boolean delete(int id);
 }

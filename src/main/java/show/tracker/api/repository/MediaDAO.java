@@ -154,8 +154,9 @@ public class MediaDAO extends DAO<Media> {
     }
 
     @Override
-    public void update(Media obj) {
+    public boolean update(Media obj) {
         // CANNOT USE METHOD
+    	return false;
     }
 
     @Override

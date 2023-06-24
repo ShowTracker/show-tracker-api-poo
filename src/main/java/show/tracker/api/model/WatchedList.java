@@ -11,7 +11,7 @@ import show.tracker.api.model.media.Media;
 
 /**
  *
- * @author aluno
+ * @author Yanna Torres
  */
 public class WatchedList {
     private int id;

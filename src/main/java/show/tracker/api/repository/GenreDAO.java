@@ -14,46 +14,35 @@ public class GenreDAO extends DAO<Genre> {
 
 	@Override
 	public boolean insert(Genre obj) {
-		// CANNOT USE METHOD
-		/*
-		 * boolean result = false; try { Class.forName(DRIVER); Connection c =
-		 * DriverManager.getConnection(URL); PreparedStatement stmt =
-		 * c.prepareStatement("INSERT INTO genre (name) VALUES (?)"); stmt.setString(1,
-		 * obj.getName()); result = (stmt.executeUpdate() == 1); } catch (SQLException
-		 * ex) { System.out.println("Erro: " + ex.getMessage()); } catch (Exception ex)
-		 * { System.out.println("Erro: " + ex.getMessage()); }
-		 */
-		return false;
+		try (Connection connection = DriverManager.getConnection(URL)) {
+			PreparedStatement statement = connection.prepareStatement("INSERT INTO genre (name) VALUES (?)");
+			statement.setString(1, obj.getName());
+			return (statement.executeUpdate() == 1);
+		} catch (SQLException ex) {
+			System.out.println("Error: " + ex.getMessage());
+			return false;
+		}
 	}
 
 	@Override
 	public Genre getOne(int id) {
 		Genre resultado = null;
-		try {
-			Class.forName(DRIVER);
-			Connection c = DriverManager.getConnection(URL);
-			PreparedStatement stmt = c.prepareStatement("SELECT id, name FROM genre WHERE id = ?");
-			stmt.setInt(1, id);
-			boolean found = false;
-			ResultSet rs = stmt.executeQuery();
+		try (Connection connection = DriverManager.getConnection(URL)) {
+			PreparedStatement statement = connection.prepareStatement("SELECT id, name FROM genre WHERE id = ?");
+			statement.setInt(1, id);
+			ResultSet resultSet = statement.executeQuery();
 
-			while (rs.next()) {
-				int codigo = rs.getInt("id");
-				String nome = rs.getString("name");
-				found = true;
-				Genre g = new Genre(codigo, nome);
-				resultado = g;
-			}
-			rs.close();
-			stmt.close();
-			c.close();
-			if (!found) {
+			if (resultSet.next()) {
+				int codigo = resultSet.getInt("id");
+				String nome = resultSet.getString("name");
+				resultado = new Genre(codigo, nome);
+			} else {
 				System.out.println("Nenhum registro encontrado");
 			}
 
+			resultSet.close();
+			statement.close();
 		} catch (SQLException ex) {
-			System.out.println("Erro: " + ex.getMessage());
-		} catch (Exception ex) {
 			System.out.println("Erro: " + ex.getMessage());
 		}
 		return resultado;
@@ -61,46 +50,55 @@ public class GenreDAO extends DAO<Genre> {
 
 	@Override
 	public List<Genre> getAll() {
-		// TODO test
-		List<Genre> resultado = new ArrayList<Genre>();
-		try {
-			Class.forName(DRIVER);
-			Connection c = DriverManager.getConnection(URL);
-			PreparedStatement stmt = c.prepareStatement("SELECT id, name FROM genre");
-			boolean encontrou = false;
-			ResultSet rs = stmt.executeQuery();
+		List<Genre> resultado = new ArrayList<>();
+		try (Connection connection = DriverManager.getConnection(URL)) {
+			PreparedStatement statement = connection.prepareStatement("SELECT id, name FROM genre");
+			ResultSet resultSet = statement.executeQuery();
 
-			while (rs.next()) {
-				int codigo = rs.getInt("id");
-				String nome = rs.getString("name");
-				encontrou = true;
+			while (resultSet.next()) {
+				int codigo = resultSet.getInt("id");
+				String nome = resultSet.getString("name");
 				Genre g = new Genre(codigo, nome);
 				resultado.add(g);
 			}
-			rs.close();
-			stmt.close();
-			c.close();
-			if (!encontrou) {
-				System.out.println("Nenhum registro encontrado");
-			}
 
+			resultSet.close();
+			statement.close();
 		} catch (SQLException ex) {
 			System.out.println("Erro: " + ex.getMessage());
-		} catch (Exception ex) {
-			System.out.println("Erro: " + ex.getMessage());
 		}
+
+		if (resultado.isEmpty()) {
+			System.out.println("Nenhum registro encontrado");
+		}
+
 		return resultado;
 	}
 
 	@Override
-	public void update(Genre obj) {
-		// CANNOT USE METHOD
+	public boolean update(Genre obj) {
+		try (Connection connection = DriverManager.getConnection(URL)) {
+			PreparedStatement statement = connection.prepareStatement("UPDATE genre SET name = (?) WHERE id = (?)");
+			statement.setString(1, obj.getName());
+			statement.setInt(2, obj.getId());
+			return statement.executeUpdate() > 0;
+		} catch (SQLException ex) {
+			System.out.println("Error: " + ex.getMessage());
+			return false;
+		}
 	}
 
 	@Override
 	public boolean delete(int id) {
-		// CANNOT USE METHOD
-		return false;
+	    try (Connection connection = DriverManager.getConnection(URL);
+	         PreparedStatement statement = connection.prepareStatement("DELETE FROM genre WHERE id = (?)")) {
+	        statement.setInt(1, id);
+	        return statement.executeUpdate() > 0;
+	    } catch (SQLException ex) {
+	        System.out.println("Error: " + ex.getMessage());
+	        return false;
+	    }
 	}
+
 
 }

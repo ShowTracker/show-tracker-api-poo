@@ -87,8 +87,9 @@ public class UserDAO extends DAO<User> {
 	}
 
 	@Override
-	public void update(User obj) {
+	public boolean update(User obj) {
 		// CANNOT USE METHOD
+		return false;
 	}
 
 	@Override

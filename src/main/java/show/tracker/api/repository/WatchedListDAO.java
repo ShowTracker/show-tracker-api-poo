@@ -150,8 +150,9 @@ public class WatchedListDAO extends DAO<WatchedList> {
     }
 
     @Override
-    public void update(WatchedList obj) {
+    public boolean update(WatchedList obj) {
         // TODO implement method
+    	return false;
     }
 
     @Override
