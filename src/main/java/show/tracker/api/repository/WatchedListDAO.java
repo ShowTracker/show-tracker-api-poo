@@ -14,12 +14,6 @@ import show.tracker.api.model.media.TvShow;
 
 public class WatchedListDAO extends DAO<WatchedList> {
 
-	@Override
-	public boolean insert(WatchedList obj) {
-		// CANNOT USE METHOD
-		return false;
-	}
-
 	public boolean insert(String email) {
 		boolean result = false;
 		try {
@@ -34,12 +28,6 @@ public class WatchedListDAO extends DAO<WatchedList> {
 			System.out.println("Erro: " + ex.getMessage());
 		}
 		return result;
-	}
-
-	@Override
-	public WatchedList getOne(int id) {
-		// CANNOT USE METHOD
-		return null;
 	}
 
 	public WatchedList getOne(String email) {
@@ -74,14 +62,7 @@ public class WatchedListDAO extends DAO<WatchedList> {
 		return result;
 	}
 
-	@Override
-	public List<WatchedList> getAll() {
-		// CANNOT USE METHOD
-		return null;
-	}
-
 	public List<Media> getAllUserMedia(int id) {
-
 		List<Media> resultado = new ArrayList<>();
 		try {
 			Class.forName(DRIVER);
@@ -151,17 +132,6 @@ public class WatchedListDAO extends DAO<WatchedList> {
 		return resultado;
 	}
 
-	@Override
-	public boolean update(WatchedList obj) {
-		// TODO implement method
-		return false;
-	}
-
-	@Override
-	public boolean delete(int id) {
-		return false;
-	}
-
 	public boolean delete(String email) {
 		boolean result = false;
 		try {
@@ -211,6 +181,52 @@ public class WatchedListDAO extends DAO<WatchedList> {
 			System.out.println("Erro: " + ex.getMessage());
 		}
 		return resultado;
+	}
+
+	/**
+	 * <strong>CANNOT USE METHOD</strong> <br>
+	 * This method don't need to be implemented
+	 */
+	@Override
+	public boolean update(WatchedList obj) {
+		return false;
+	}
+
+	/**
+	 * <strong>CANNOT USE METHOD</strong> <br>
+	 * This method don't need to be implemented
+	 */
+	@Override
+	public boolean delete(int id) {
+		return false;
+	}
+
+	/**
+	 * <strong>CANNOT USE METHOD</strong> <br>
+	 * This method don't need to be implemented
+	 */
+	@Override
+	public List<WatchedList> getAll() {
+		return null;
+	}
+
+	/**
+	 * <strong>CANNOT USE METHOD</strong> <br>
+	 * This method don't need to be implemented
+	 */
+	@Override
+	public WatchedList getOne(int id) {
+		return null;
+	}
+
+	/**
+	 * <strong>CANNOT USE METHOD</strong> <br>
+	 * This method don't need to be implemented
+	 */
+	@Override
+	public boolean insert(WatchedList obj) {
+		// CANNOT USE METHOD
+		return false;
 	}
 
 }
