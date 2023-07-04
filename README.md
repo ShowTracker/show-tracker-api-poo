@@ -2,225 +2,227 @@
   <img src="https://github.com/ShowTracker/show-tracker-api-poo/assets/86852231/55ced9aa-c025-458f-abdb-4c0e9a91e8e6" width="100px">
 </p>
 
-# Show Traker API
+# Show Tracker API
 
-O **Show Tracker** é uma API desenvolvida para permitir que você salve e gerencie sua lista de filmes e séries assistidos. Essa aplicação foi criada como parte das disciplinas de Programação Orientada a Objetos e Banco de Dados I do curso de Sistema e Mídias Digitais da UFC. A API foi desenvolvida utilizando `Java`, `Spring Boot` e `SQLite` como banco de dados.
+The **Show Tracker API** is developed to allow you to save and manage your list of watched movies and TV shows. This application was created as part of the Object-Oriented Programming and Database I courses in the Digital Systems and Media program at UFC. The API is built using `Java`, `Spring Boot`, and `SQLite` as the database.
 
-Com o Show Tracker API, você pode facilmente adicionar, visualizar e excluir filmes e séries da sua lista de acompanhamento. A API oferece recursos completos de CRUD _(Create, Read, Update, Delete)_ de forma clara e pática.
+With the Show Tracker API, you can easily add, view, and delete movies and TV shows from your watchlist. The API provides comprehensive CRUD (Create, Read, Update, Delete) functionalities in a clear and practical manner.
 
-# Como utilizar
-A aplicação não está hospedada em nenhum servidor, porntanto, para utilizá-la você deve instalá-la localmente seguindo os seguintes passos.
-### Clone o repositório localmente
+## Getting Started
+Since the application is not hosted on a server, you need to install and run it locally by following these steps.
+
+### Clone the repository locally
 ```
 git clone https://github.com/ShowTracker/show-tracker-api-poo.git
 ```
-### Abra e execute o projeto em uma IDE
-`Eclipse`, `NetBeans` e `InteliJ` são algumas opções de IDE que rodam JAVA
 
-### A URL inicial da API está setada na porta 8088:
+### Open and run the project in an IDE
+You can use IDEs such as Eclipse, NetBeans, or IntelliJ to run the Java application.
+
+### The initial API URL is set to port 8088:
 ```
 http://localhost:8088
 ```
-Caso esta esteja ocupada na sua máquina, você pode alterar no aquirvo **application.properties**
+If this port is already in use on your machine, you can modify it in the `application.properties` file.
 
-# Endpoints
+## Endpoints
 
-## USERS
-  ### Create User
-  Create a new user in the collection.
-  
-  **Request**
-  * HTTP Method: **POST**
-  * Endpoint: `/users/register`
-  * Request Body:
-  ```json
-  {
-    "fisrtName": "Taylor",
-    "lastName": "Smith",
-    "email": "taylor.smith@example.com",
-    "birthDate": "1995/09/12",
-    "password": "taylor123"
-  }
-  
-  ```
-  **Response**
-  
-  `Success 200`
-  ```json
-  {
-    "fisrtName": "Taylor",
-    "lastName": "Smith",
-    "email": "taylor.smith@example.com",
-    "birthDate": "1995/09/12",
-    "password": "taylor123"
-  }
-  
-  ```
+### USERS
 
-### Get User
-  Get a user by email.
-  
-  **Request**
-  * HTTP Method: **GET**
-  * Endpoint: `/users`
-  * Request Body:
-  ```json
-    {
-      "email": "taylor.smith@example.com",
-      "password": "taylor123"
-    }
-  ```
-  **Response**
-  
-  `Success 200`
-  ```json
-    {
-      "fisrtName": "Taylor",
-      "lastName": "Smith",
-      "email": "taylor.smith@example.com",
-      "birthDate": "1995-09-12",
-      "password": "taylor123"
-    }
-  ```
-
-### Delete User
-  Delete a user by email.
-  
-  **Request**
-  * HTTP Method: **DELETE**
-  * Endpoint: `/users/deleteAccount`
-  * Request Body:
-  ```json
-    {
-      "email": "taylor.smith@example.com"
-    }
-  ```
-  **Response**
-  
-  `Success 200`
-  ```json
-    "User deleted successfully."
-  ```
-
-## GENRE
-
-### Get a genre
-Get genre by ID
+#### Create User
+Create a new user in the collection.
 
 **Request**
-* HTTP Method: **GET**
-* Endpoint: `/genres`
-* Request Body:
+- HTTP Method: **POST**
+- Endpoint: `/users/register`
+- Request Body:
 ```json
-  {
-      "id": 10
-  }
+{
+  "firstName": "Taylor",
+  "lastName": "Smith",
+  "email": "taylor.smith@example.com",
+  "birthDate": "1995/09/12",
+  "password": "taylor123"
+}
 ```
 **Response**
 
 `Success 200`
 ```json
-  "Family"
+{
+  "firstName": "Taylor",
+  "lastName": "Smith",
+  "email": "taylor.smith@example.com",
+  "birthDate": "1995/09/12",
+  "password": "taylor123"
+}
 ```
 
-### Create genre
-Create genre in the collection
+#### Get User
+Get a user by email.
 
 **Request**
-* HTTP Method: **POST**
-* Endpoint: `/genres/register`
-* Request Body:
+- HTTP Method: **GET**
+- Endpoint: `/users`
+- Request Body:
 ```json
-  {
-      "id": 0,
-      "name": "Cult"
-  }
+{
+  "email": "taylor.smith@example.com",
+  "password": "taylor123"
+}
 ```
 **Response**
 
 `Success 200`
 ```json
-  "Genre created successfully"
+{
+  "firstName": "Taylor",
+  "lastName": "Smith",
+  "email": "taylor.smith@example.com",
+  "birthDate": "1995-09-12",
+  "password": "taylor123"
+}
 ```
-## MEDIA AND WATCHED LIST 
 
-### Search media
-Get genre by name search
+#### Delete User
+Delete a user by email.
 
 **Request**
-* HTTP Method: **GET**
-* Endpoint: `/media?entry=iCarly`
+- HTTP Method: **DELETE**
+- Endpoint: `/users/deleteAccount`
+- Request Body:
+```json
+{
+  "email": "taylor.smith@example.com"
+}
+```
+**Response**
 
+`Success 200`
+```json
+"User deleted successfully."
+```
+
+### GENRE
+
+#### Get a Genre
+Get a genre by ID.
+
+**Request**
+- HTTP Method: **GET**
+- Endpoint: `/genres`
+- Request Body:
+```json
+{
+  "id": 10
+}
+```
+**Response**
+
+`Success 200`
+```json
+"Family"
+```
+
+#### Create Genre
+Create a genre in the collection.
+
+**Request**
+- HTTP Method: **POST**
+- Endpoint: `/genres/register`
+- Request Body:
+```json
+{
+  "id": 0,
+  "name": "Cult"
+}
+```
+**Response**
+
+`Success 200`
+```json
+"Genre created successfully."
+```
+
+### MEDIA AND WATCHED LIST
+
+#### Search Media
+Get a media by name search.
+
+**Request**
+- HTTP Method: **GET**
+-
+
+ Endpoint: `/media?entry=iCarly`
   
 **Response**
 
 `Success 200`
 ```json
-  "Genre created successfully"
+"Genre created successfully."
 ```
 
-### Add media to watched list
-Add movie or tv show in watched list
+#### Add Media to Watched List
+Add a movie or TV show to the watched list.
 
 **Request**
-* HTTP Method: **POST**
-* Endpoint: `/media/user/add`
-* Request Body:
+- HTTP Method: **POST**
+- Endpoint: `/media/user/add`
+- Request Body:
 ```json
- {
-      "email": "taylor.smith@example.com",
-      "media_id": 268278
-  }
+{
+  "email": "taylor.smith@example.com",
+  "media_id": 268278
+}
 ```
 **Response**
 
 `Success 200`
 ```json
-  {
-    "id": 268278,
-    "year": "2007",
-    "title": "iCarly",
-    "isAdult": false,
-    "genres": [],
-    "endYear": "2012"
-  }
+{
+  "id": 268278,
+  "year": "2007",
+  "title": "iCarly",
+  "isAdult": false,
+  "genres": [],
+  "endYear": "2012"
+}
 ```
 
-### Get a watched list
-Get a user watched list by email
+#### Get Watched List
+Get a user's watched list by email.
 
 **Request**
-* HTTP Method: **GET**
-* Endpoint: `/media/user`
-* Request Body:
+- HTTP Method: **GET**
+- Endpoint: `/media/user`
+- Request Body:
 ```json
- {
-      "email": "taylor.smith@example.com"
-  }
-```
-**Response**
-
-`Success 200`
-
-`List of movies or TV Shows in Watched list`
-
-### Remove item from watched list
-Remove a media from watched list by user email and media id
-
-**Request**
-* HTTP Method: **DELETE**
-* Endpoint: `/media/user/remove`
-* Request Body:
-```json
- {
-    "email": "taylor.smith@example.com",
-    "media_id": 268278
+{
+  "email": "taylor.smith@example.com"
 }
 ```
 **Response**
 
 `Success 200`
 
+`List of movies or TV shows in the watched list`
+
+#### Remove Item from Watched List
+Remove a media from the watched list by user email and media ID.
+
+**Request**
+- HTTP Method: **DELETE**
+- Endpoint: `/media/user/remove`
+- Request Body:
+```json
+{
+  "email": "taylor.smith@example.com",
+  "media_id": 268278
+}
 ```
-"Media removed from the watched list successfuly."
+**Response**
+
+`Success 200`
+```
+"Media removed from the watched list successfully."
 ```
