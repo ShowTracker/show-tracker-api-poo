@@ -18,6 +18,8 @@ import show.tracker.api.repository.WatchedListDAO;
 public class UserController {
 
 	private UserDAO userDAO;
+    public static int connections = 0;
+
 
 	public UserController(UserDAO userDAO) {
 		this.userDAO = userDAO;
@@ -26,8 +28,10 @@ public class UserController {
 	@GetMapping
 	public ResponseEntity<?> getUser(@RequestBody UserCredentials credentials) {
 		User user = userDAO.getOne(credentials.getEmail(), credentials.getPassword());
+		
 
 		if (user != null) {
+			Connections();
 			return ResponseEntity.ok(user);
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
@@ -105,5 +109,9 @@ public class UserController {
 		public void setEmail(String email) {
 			this.email = email;
 		}
+	}
+	
+	public static void Connections() {
+		connections++;
 	}
 }
